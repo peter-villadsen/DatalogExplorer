@@ -5,6 +5,10 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+	<StartupObject>DatalogExplorer.App</StartupObject>
+    <Description>App allowing editing and running of Datalog programs</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

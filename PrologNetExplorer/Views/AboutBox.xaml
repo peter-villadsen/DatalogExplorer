@@ -53,7 +53,7 @@
                        ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     Datalog Explorer<LineBreak/>by Peter Villadsen<LineBreak/><LineBreak/>
                     
-            The source code for this tool is found on <Hyperlink RequestNavigate="Navigate" NavigateUri="https://github.com/microsoft/Dynamics365FO-AppChecker">Github</Hyperlink> and is provided 
+            The source code for this tool is found on <Hyperlink RequestNavigate="Navigate" NavigateUri="https://github.com/peter-villadsen/DatalogExplorer">Github</Hyperlink> and is provided 
             under the <Hyperlink RequestNavigate="Navigate" NavigateUri="https://opensource.org/licenses/MIT">MIT license</Hyperlink>.<LineBreak/>
             This tool uses the Sharpalog datalog engine provided on <Hyperlink RequestNavigate="Navigate" NavigateUri="https://github.com/andrzejolszak/sharpalog"></Hyperlink> and is provided 
             under the <Hyperlink RequestNavigate="Navigate" NavigateUri="https://www.apache.org/licenses/LICENSE-2.0">Apache License version 2</Hyperlink>.<LineBreak/>
