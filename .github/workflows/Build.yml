@@ -1,0 +1,44 @@
+name: Datalog Explorer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest 
+    env:
+      Solution_Name: DatalogExplorer.sln
+  
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    - name: Build and publish
+      run: dotnet publish -r win-x64  --self-contained true -c Release -p:PublishSingleFile=true  "DatalogExplorer.sln"
+    
+    # Store produced result so it can be downloaded.
+    - name: Upload compiled app so it can be downloaded.
+      uses: actions/upload-artifact@v1
+      with:
+        name: DatalogExplorer.netcore
+        path: "bin\\Release\\net5.0-windows\\win-x64\\publish"    
+        uses: actions/upload-artifact@v2
