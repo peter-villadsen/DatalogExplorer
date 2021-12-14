@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Copy.ico" />
+    <None Remove="Images\Cut.ico" />
+    <None Remove="Images\Delete.ico" />
+    <None Remove="Images\OpenFile.ico" />
+    <None Remove="Images\Paste.ico" />
+    <None Remove="Images\Redo.ico" />
+    <None Remove="Images\Undo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.1.2.30" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleApp1\Sharplog.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Copy.ico" />
+    <Resource Include="Images\Cut.ico" />
+    <Resource Include="Images\Delete.ico" />
+    <Resource Include="Images\OpenFile.ico" />
+    <Resource Include="Images\Paste.ico" />
+    <Resource Include="Images\Redo.ico" />
+    <Resource Include="Images\Undo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
