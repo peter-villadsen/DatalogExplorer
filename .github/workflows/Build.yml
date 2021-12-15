@@ -9,10 +9,6 @@ on:
 jobs:
 
   build:
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
-
     runs-on: windows-latest 
     env:
       Solution_Name: DatalogExplorer.sln
@@ -33,12 +29,12 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Build and publish
-      run: dotnet publish -r win-x64  --self-contained true -c Release -p:PublishSingleFile=true  "DatalogExplorer.sln"
+      run: dotnet publish -c release --self-contained true -r win-x64  DatalogExplorer.sln
     
     # Store produced result so it can be downloaded.
     - name: Upload compiled app so it can be downloaded.
       uses: actions/upload-artifact@v1
       with:
         name: DatalogExplorer.netcore
-        path: "bin\\Release\\net5.0-windows\\win-x64\\publish"    
+        path: "PrologNetExplorer\\bin\\Release\\net5.0-windows\\win-x64\\publish"    
         uses: actions/upload-artifact@v2
