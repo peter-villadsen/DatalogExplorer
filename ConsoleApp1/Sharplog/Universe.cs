@@ -95,7 +95,7 @@ namespace Sharplog
         private EdbProvider edbProvider;
 
         private Dictionary<string, HashSet<Rule>> idb;
-        public Dictionary<string, HashSet<Rule>> Idb => idb;
+        public Dictionary<string, HashSet<Rule>> Idb { get { return idb; } }
 
         private Dictionary<string, Rule> idbRuleIds;
 

@@ -71,7 +71,7 @@ namespace DatalogExplorer.ViewModels
                 }
             });
 
-        public ICommand AboutCommand => new RelayCommand(_ =>
+        public static ICommand AboutCommand => new RelayCommand(_ =>
         {
             var aboutBox = new DatalogExplorer.Views.AboutBox();
             aboutBox.Show();
@@ -83,7 +83,7 @@ namespace DatalogExplorer.ViewModels
             string src = this.view.FactsAndRulesEditor.Text;
             Stopwatch sw = new();
             sw.Start();
-            Universe universe = new Universe();
+            var universe = new Universe();
             try
             {
                 this.view.QueryEditor.Clear();
@@ -139,26 +139,26 @@ namespace DatalogExplorer.ViewModels
 
             foreach (IGrouping<string, Sharplog.Expr> fact in universe.GetEdbProvider().AllFacts().All.GroupBy(f => f.PredicateWithArity).OrderBy(f => f.Key))
             {
-                TreeViewItem category = new TreeViewItem() { Header = fact.Key };
+                var category = new TreeViewItem() { Header = fact.Key };
                 this.view.ProgramTree.Items.Add(category);
 
                 foreach (var q in fact)
                 {
-                    TreeViewItem factNode = new TreeViewItem() { Header = q.ToString() };
+                    var factNode = new TreeViewItem() { Header = q.ToString() };
                     category.Items.Add(factNode);
                 }
             }
 
             foreach (var q in universe.Idb.GroupBy(f => f.Key).OrderBy(f => f.Key))
             {
-                TreeViewItem category = new TreeViewItem() { Header = q.Key };
+                var category = new TreeViewItem() { Header = q.Key };
                 this.view.ProgramTree.Items.Add(category);
 
                 foreach (var r in q)
                 {
                     foreach (var s in r.Value)
                     {
-                        TreeViewItem ruleNode = new TreeViewItem() { Header = s.ToString() };
+                        var ruleNode = new TreeViewItem() { Header = s.ToString() };
                         category.Items.Add(ruleNode);
                     }
                 }
