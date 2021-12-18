@@ -59,7 +59,7 @@ namespace DatalogExplorer.ViewModels
                 var saveFileDialog = new SaveFileDialog()
                 {
                     AddExtension = true,
-                    CheckFileExists = true,
+                    CheckFileExists = false,
                     CheckPathExists = true,
                     DefaultExt = "dl",
                     Filter = "Datalog|*.dl|All|*.*",
@@ -69,8 +69,7 @@ namespace DatalogExplorer.ViewModels
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    using var reader = new System.IO.StreamReader(view.FactsAndRulesEditor.Text);
-                    File.WriteAllText(saveFileDialog.FileName, reader.ReadToEnd());
+                    File.WriteAllText(saveFileDialog.FileName, view.FactsAndRulesEditor.Text);
                 }
             });
 
