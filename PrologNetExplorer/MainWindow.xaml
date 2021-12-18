@@ -23,8 +23,16 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="Save" Command="{Binding SaveFileCommand}" CommandParameter="{Binding ElementName=Main}" InputGestureText="Ctrl+S" />
-                <MenuItem Header="Open" Command="{Binding OpenFileCommand}" CommandParameter="{Binding ElementName=Main}" InputGestureText="Ctrl+O"  />
+                <MenuItem Header="Save" Command="{Binding SaveFileCommand}" CommandParameter="{Binding ElementName=Main}" InputGestureText="Ctrl+S" >
+                    <MenuItem.Icon>
+                        <Image Source="Images/content-save.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open" Command="{Binding OpenFileCommand}" CommandParameter="{Binding ElementName=Main}" InputGestureText="Ctrl+O" >
+                    <MenuItem.Icon>
+                        <Image Source="Images\OpenFile.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
                 <MenuItem Header="_Exit" Command="{Binding ApplicationExitCommand}" InputGestureText="Alt+F4"/>
             </MenuItem>
@@ -100,7 +108,7 @@
                     <TreeView x:Name="ProgramTree" >
                     </TreeView>
                 </GroupBox>
-                <GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitter}" Foreground="Yellow"/>
+                <GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitter}"/>
                 
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
@@ -108,19 +116,48 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="30*"/>
                     </Grid.RowDefinitions>
-                    <GroupBox  Grid.Row="0" Header="EDB">
-                        <avalonedit:TextEditor x:Name="FactsAndRulesEditor" Margin="0,2,0,0"  ShowLineNumbers="{Binding ShowLineNumbers}" FontFamily="Consolas" FontSize="{Binding FontSize}">
-                            likes(john,mary).
-                            likes(mary,joe). eats(joe, sushi). eats(john, beef).
-                            circle(A) :- likes(A, B).
-                            circle(A)?
-                        </avalonedit:TextEditor>
+                    <GroupBox  Grid.Row="0" Header="Data">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ToolBarTray DockPanel.Dock="Top" x:Name="QueryToolbarTray" Orientation="Horizontal" >
+                                <ToolBarTray.Resources>
+                                    <Style TargetType="{x:Type Image}" x:Key="ToolbarButtonImage">
+                                        <Setter Property="Width" Value="24"/>
+                                        <Setter Property="Height" Value="24"/>
+                                    </Style>
+                                </ToolBarTray.Resources>
+                                <ToolBar Band="1"   >
+                                    <Button Command="{Binding OpenFileCommand}" CommandParameter="{Binding ElementName=Main}" ToolTip="Open data file">
+                                        <Image Source="Images\OpenFile.ico" Style="{StaticResource ToolbarButtonImage}"  />
+                                    </Button>
+                                    <Button Command="{Binding SaveFileCommand}" CommandParameter="{Binding ElementName=Main}" ToolTip="Save data file">
+                                        <Image Source="Images\content-save.png" Style="{StaticResource ToolbarButtonImage}"  />
+                                    </Button>
+                                    <Separator/>
+                                    <Button x:Name="ExecuteQueryButton"  Command="{Binding ExecuteCommand}" CommandParameter="{Binding ElementName=Main}" ToolTip="Execute query (F5)" ToolBar.OverflowMode="Never" >
+                                        <Image Source="Images\play.png" Style="{StaticResource ToolbarButtonImage}"  />
+                                    </Button>
+                                    <Separator/>
+                                    <Button  x:Name="IncreaseQueryFontSizeButton"  Command="{Binding IncreaseQueryFontSizeCommand}"  CommandParameter="{Binding ElementName=Main}" ToolTip="Increase font size" >
+                                        <Image Source="Images\format-font-size-increase.png" Style="{StaticResource ToolbarButtonImage}" />
+                                    </Button>
+                                    <Button x:Name="DecreaseQueryFontSizeButton"  Command="{Binding DecreaseQueryFontSizeCommand}" CommandParameter="{Binding ElementName=Main}" ToolTip="Decrease font size" >
+                                        <Image Source="Images\format-font-size-decrease.png" Style="{StaticResource ToolbarButtonImage}"/>
+                                    </Button>
+                                    <Separator/>
+                                </ToolBar>
+                            </ToolBarTray>
+                            <avalonedit:TextEditor Grid.Row="1" x:Name="FactsAndRulesEditor" PreviewMouseWheel="MouseWheelHandler" Margin="0,2,0,0"  ShowLineNumbers="{Binding ShowLineNumbers}" FontFamily="Consolas" FontSize="{Binding FontSize}"/>
+                        </Grid>
+
                     </GroupBox>
                     <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalSplitter}"  />
                     <GroupBox Grid.Row="2" Header="Transcript">
-                        <avalonedit:TextEditor x:Name="QueryEditor" Margin="0,2,0,0"  ShowLineNumbers="{Binding ShowLineNumbers}" FontFamily="Consolas" FontSize="{Binding FontSize}" >
+                        <avalonedit:TextEditor x:Name="TranscriptEditor" PreviewMouseWheel="MouseWheelHandler" Margin="0,2,0,0"  ShowLineNumbers="{Binding ShowLineNumbers}" FontFamily="Consolas" FontSize="{Binding FontSize}" />
 
-                        </avalonedit:TextEditor>
                     </GroupBox>
                 </Grid>
 

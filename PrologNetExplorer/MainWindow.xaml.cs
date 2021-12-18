@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Input;
+
 namespace DatalogExplorer
 {
     /// <summary>
@@ -33,7 +35,7 @@ parent(alice, bob).
 parent(alice, bart).
 parent(alice, betty).
 
-child(X,Y) :- parent(Y,X).
+child(X,Y) :- parent(Y, X).
 
 ancestor(X, Y) :- parent(X, Y).
 ancestor(X, Y) :- ancestor(X, Z), parent(Z, Y).
@@ -43,6 +45,20 @@ sibling(X, Y) :- parent(A, X), parent(A, Y), X <> Y.
 sibling(A,B)?
 sibling(bob,B)?";
 
+        }
+
+        protected virtual void MouseWheelHandler(object sender, MouseWheelEventArgs e)
+        {
+            if (sender is ICSharpCode.AvalonEdit.TextEditor editor)
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                {
+                    if (e.Delta > 0)
+                        this.IncreaseQueryFontSizeButton.Command.Execute(this);
+                    else
+                        this.DecreaseQueryFontSizeButton.Command.Execute(this);
+                }
+            }
         }
     }
 }

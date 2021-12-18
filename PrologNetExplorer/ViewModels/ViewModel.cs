@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows.Controls;
+using DatalogExplorer.Properties;
 
 namespace DatalogExplorer.ViewModels
 {
@@ -80,6 +81,34 @@ namespace DatalogExplorer.ViewModels
 
         });
 
+        public static ICommand IncreaseQueryFontSizeCommand => new RelayCommand(
+            target =>
+            {
+                var view = (MainWindow)target;
+                var fontSize = Settings.Default.FontSize + 2;
+                view.FactsAndRulesEditor.FontSize = fontSize;
+                view.TranscriptEditor.FontSize = fontSize;
+                Settings.Default.FontSize = fontSize;
+            },
+            canExecute => 
+            {
+                return Settings.Default.FontSize < 32; 
+            });
+
+        public static ICommand DecreaseQueryFontSizeCommand => new RelayCommand(
+            target =>
+            {
+                var view = (MainWindow)target;
+                var fontSize = Settings.Default.FontSize - 2;
+                view.FactsAndRulesEditor.FontSize = fontSize;
+                view.TranscriptEditor.FontSize = fontSize;
+                Settings.Default.FontSize = fontSize;
+            },
+            canExecute =>
+            {
+                return Settings.Default.FontSize > 5;
+            });
+
         public ICommand ExecuteCommand => new RelayCommand(p =>
         {
             var view = (MainWindow)p;
@@ -89,14 +118,14 @@ namespace DatalogExplorer.ViewModels
             var universe = new Universe();
             try
             {
-                view.QueryEditor.Clear();
+                view.TranscriptEditor.Clear();
                 {
                     var res = universe.ExecuteAll(src);
 
                     foreach (var s in res.Keys)
                     {
-                        view.QueryEditor.Text += s.ToString() + Environment.NewLine;
-                        string term = ""; 
+                        view.TranscriptEditor.Text += s.ToString() + Environment.NewLine;
+                        string term = "";
                         foreach (var binding in res[s])
                         {
                             var first = true;
@@ -110,29 +139,27 @@ namespace DatalogExplorer.ViewModels
                                 {
                                     term += ", ";
                                 }
-                                term += nameValuePair.Key + ": " +nameValuePair.Value;
+                                term += nameValuePair.Key + ": " + nameValuePair.Value;
 
                             }
                             term += Environment.NewLine;
                         }
-                        view.QueryEditor.Text += term.ToString() + Environment.NewLine;
+                        view.TranscriptEditor.Text += term.ToString() + Environment.NewLine;
                     }
                 }
                 UpdateProgramView(universe, view);
             }
             catch (Exception ex)
             {
-                view.QueryEditor.Text = ex.Message;
+                view.TranscriptEditor.Text = ex.Message;
             }
             finally
             {
                 sw.Stop();
                 this.Message = $"{sw.ElapsedMilliseconds}ms elapsed";
             }
-        })
-        {
+        });
 
-        };
         #endregion
 
         private static void UpdateProgramView(Universe universe, MainWindow view)
@@ -169,8 +196,12 @@ namespace DatalogExplorer.ViewModels
 
         public ViewModel()
         {
+            Properties.Settings.Default.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
+            {
+                // Save all the user's settings when they change.
+                Properties.Settings.Default.Save();
+            };
         }
-
         #region properties
 
         private string? _caretPositionString;
@@ -218,8 +249,6 @@ namespace DatalogExplorer.ViewModels
                 }
             }
         }
-
-
         #endregion
     }
 }

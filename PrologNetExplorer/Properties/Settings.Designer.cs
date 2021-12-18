@@ -38,12 +38,12 @@ namespace DatalogExplorer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowLIneNumbers {
+        public bool ShowLineNumbers {
             get {
-                return ((bool)(this["ShowLIneNumbers"]));
+                return ((bool)(this["ShowLineNumbers"]));
             }
             set {
-                this["ShowLIneNumbers"] = value;
+                this["ShowLineNumbers"] = value;
             }
         }
     }
