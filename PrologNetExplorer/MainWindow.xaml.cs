@@ -54,9 +54,13 @@ sibling(bob,B)?";
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 {
                     if (e.Delta > 0)
+                    {
                         this.IncreaseQueryFontSizeButton.Command.Execute(this);
+                    }
                     else
+                    {
                         this.DecreaseQueryFontSizeButton.Command.Execute(this);
+                    }
                 }
             }
         }

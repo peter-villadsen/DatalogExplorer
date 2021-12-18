@@ -85,29 +85,29 @@ namespace DatalogExplorer.ViewModels
             target =>
             {
                 var view = (MainWindow)target;
-                var fontSize = Settings.Default.FontSize + 2;
-                view.FactsAndRulesEditor.FontSize = fontSize;
-                view.TranscriptEditor.FontSize = fontSize;
-                Settings.Default.FontSize = fontSize;
+                if (Settings.Default.FontSize < 32)
+                {
+                    var fontSize = Settings.Default.FontSize + 2;
+                    view.FactsAndRulesEditor.FontSize = fontSize;
+                    view.TranscriptEditor.FontSize = fontSize;
+                    Settings.Default.FontSize = fontSize;
+                }
             },
-            canExecute => 
-            {
-                return Settings.Default.FontSize < 32; 
-            });
+            canExecute => Settings.Default.FontSize < 32);
 
         public static ICommand DecreaseQueryFontSizeCommand => new RelayCommand(
             target =>
             {
                 var view = (MainWindow)target;
-                var fontSize = Settings.Default.FontSize - 2;
-                view.FactsAndRulesEditor.FontSize = fontSize;
-                view.TranscriptEditor.FontSize = fontSize;
-                Settings.Default.FontSize = fontSize;
+                if (Settings.Default.FontSize > 5)
+                {
+                    var fontSize = Settings.Default.FontSize - 2;
+                    view.FactsAndRulesEditor.FontSize = fontSize;
+                    view.TranscriptEditor.FontSize = fontSize;
+                    Settings.Default.FontSize = fontSize;
+                }
             },
-            canExecute =>
-            {
-                return Settings.Default.FontSize > 5;
-            });
+            canExecute => Settings.Default.FontSize > 5);
 
         public ICommand ExecuteCommand => new RelayCommand(p =>
         {
