@@ -55,7 +55,7 @@
                     
             The source code for this tool is found on <Hyperlink RequestNavigate="Navigate" NavigateUri="https://github.com/peter-villadsen/DatalogExplorer">Github</Hyperlink> and is provided 
             under the <Hyperlink RequestNavigate="Navigate" NavigateUri="https://opensource.org/licenses/MIT">MIT license</Hyperlink>.<LineBreak/>
-            This tool uses the Sharpalog datalog engine provided on <Hyperlink RequestNavigate="Navigate" NavigateUri="https://github.com/andrzejolszak/sharpalog"></Hyperlink> and is provided 
+            This tool uses the Sharpalog datalog engine provided on <Hyperlink RequestNavigate="Navigate" NavigateUri="https://github.com/andrzejolszak/sharpalog">Github</Hyperlink> and is provided 
             under the <Hyperlink RequestNavigate="Navigate" NavigateUri="https://www.apache.org/licenses/LICENSE-2.0">Apache License version 2</Hyperlink>.<LineBreak/>
 
             The editor control is provided by <Hyperlink RequestNavigate="Navigate" NavigateUri="http://avalonedit.net">AvalonEdit</Hyperlink> provided 

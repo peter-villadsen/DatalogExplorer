@@ -15,7 +15,7 @@ namespace DatalogExplorer.ViewModels
     internal class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private readonly MainWindow view;
+        //private readonly MainWindow view;
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -29,9 +29,10 @@ namespace DatalogExplorer.ViewModels
                 Application.Current.Shutdown();
             });
 
-        public ICommand OpenFileCommand => new RelayCommand(
+        public static ICommand OpenFileCommand => new RelayCommand(
             p =>
             {
+                MainWindow view = (MainWindow)p;
                 var openFileDialog = new OpenFileDialog()
                 {
                     CheckFileExists = true,
@@ -45,14 +46,15 @@ namespace DatalogExplorer.ViewModels
                 if (openFileDialog.ShowDialog() == true)
                 {
                     var source = File.ReadAllText(openFileDialog.FileName);
-                    this.view.FactsAndRulesEditor.Text = source;
+                    view.FactsAndRulesEditor.Text = source;
                 }
 
             });
 
-        public ICommand SaveFileCommand => new RelayCommand(
+        public static ICommand SaveFileCommand => new RelayCommand(
             p =>
             {
+                MainWindow view = (MainWindow)p;
                 var saveFileDialog = new SaveFileDialog()
                 {
                     AddExtension = true,
@@ -66,7 +68,7 @@ namespace DatalogExplorer.ViewModels
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    using var reader = new System.IO.StreamReader(this.view.FactsAndRulesEditor.Text);
+                    using var reader = new System.IO.StreamReader(view.FactsAndRulesEditor.Text);
                     File.WriteAllText(saveFileDialog.FileName, reader.ReadToEnd());
                 }
             });
@@ -80,19 +82,20 @@ namespace DatalogExplorer.ViewModels
 
         public ICommand ExecuteCommand => new RelayCommand(p =>
         {
-            string src = this.view.FactsAndRulesEditor.Text;
+            var view = (MainWindow)p;
+            string src = view.FactsAndRulesEditor.Text;
             Stopwatch sw = new();
             sw.Start();
             var universe = new Universe();
             try
             {
-                this.view.QueryEditor.Clear();
+                view.QueryEditor.Clear();
                 {
                     var res = universe.ExecuteAll(src);
 
                     foreach (var s in res.Keys)
                     {
-                        this.view.QueryEditor.Text += s.ToString() + Environment.NewLine;
+                        view.QueryEditor.Text += s.ToString() + Environment.NewLine;
                         string term = ""; 
                         foreach (var binding in res[s])
                         {
@@ -111,16 +114,15 @@ namespace DatalogExplorer.ViewModels
 
                             }
                             term += Environment.NewLine;
-                            //term += ")";
                         }
-                        this.view.QueryEditor.Text += term.ToString() + Environment.NewLine;
+                        view.QueryEditor.Text += term.ToString() + Environment.NewLine;
                     }
                 }
-                this.UpdateProgramView(universe);
+                UpdateProgramView(universe, view);
             }
             catch (Exception ex)
             {
-                this.view.QueryEditor.Text = ex.Message;
+                view.QueryEditor.Text = ex.Message;
             }
             finally
             {
@@ -133,14 +135,14 @@ namespace DatalogExplorer.ViewModels
         };
         #endregion
 
-        private void UpdateProgramView(Universe universe)
+        private static void UpdateProgramView(Universe universe, MainWindow view)
         {
-            this.view.ProgramTree.Items.Clear();
+            view.ProgramTree.Items.Clear();
 
             foreach (IGrouping<string, Sharplog.Expr> fact in universe.GetEdbProvider().AllFacts().All.GroupBy(f => f.PredicateWithArity).OrderBy(f => f.Key))
             {
                 var category = new TreeViewItem() { Header = fact.Key };
-                this.view.ProgramTree.Items.Add(category);
+                view.ProgramTree.Items.Add(category);
 
                 foreach (var q in fact)
                 {
@@ -152,7 +154,7 @@ namespace DatalogExplorer.ViewModels
             foreach (var q in universe.Idb.GroupBy(f => f.Key).OrderBy(f => f.Key))
             {
                 var category = new TreeViewItem() { Header = q.Key };
-                this.view.ProgramTree.Items.Add(category);
+                view.ProgramTree.Items.Add(category);
 
                 foreach (var r in q)
                 {
@@ -165,30 +167,8 @@ namespace DatalogExplorer.ViewModels
             }
         }
 
-        public ViewModel(MainWindow w)
+        public ViewModel()
         {
-            this.view = w;
-
-            this.view.FactsAndRulesEditor.TextArea.Caret.PositionChanged += (object? sender, EventArgs a) =>
-            {
-                var caret = sender as ICSharpCode.AvalonEdit.Editing.Caret;
-                this.CaretPositionString = string.Format(CultureInfo.CurrentCulture, "Line: {0} Column: {1}", caret.Line, caret.Column);
-            };
-
-            this.view.FactsAndRulesEditor.Text = @"
-parent(alice, bob).
-parent(alice, bart).
-parent(alice, betty).
-
-child(X,Y) :- parent(Y,X).
-
-ancestor(X, Y) :- parent(X, Y).
-ancestor(X, Y) :- ancestor(X, Z), parent(Z, Y).
-
-sibling(X, Y) :- parent(A, X), parent(A, Y), X <> Y.
-
-sibling(A,B)?
-sibling(bob,B)?";
         }
 
         #region properties
@@ -197,7 +177,7 @@ sibling(bob,B)?";
         public string? CaretPositionString
         {
             get { return this._caretPositionString;  }
-            private set 
+            set 
             {
                 this._caretPositionString = value;
                 this.OnPropertyChanged(nameof(CaretPositionString));

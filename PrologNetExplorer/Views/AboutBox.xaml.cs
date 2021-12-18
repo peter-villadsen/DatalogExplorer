@@ -17,7 +17,7 @@ namespace DatalogExplorer.Views
             InitializeComponent();
         }
 
-        private static Assembly? assembly = Assembly.GetEntryAssembly();
+        private static readonly Assembly? assembly = Assembly.GetEntryAssembly();
 
         public static string? AssemblyVersion
         {
@@ -27,7 +27,7 @@ namespace DatalogExplorer.Views
             }
         }
 
-        public string? AssemblyName
+        public static string? AssemblyName
         {
             get
             {
@@ -35,7 +35,7 @@ namespace DatalogExplorer.Views
             }
         }
 
-        public string? FrameworkName
+        public static string? FrameworkName
         {
             get
             {
@@ -43,10 +43,10 @@ namespace DatalogExplorer.Views
             }
         }
 
-        public string? AssemblyTitle => assembly?.GetCustomAttribute<AssemblyTitleAttribute>()?.Title;
-        public string? Copyright => assembly?.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
-        public string? Description => assembly?.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
-        public string? Company => assembly?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company;
+        public static string? AssemblyTitle => assembly?.GetCustomAttribute<AssemblyTitleAttribute>()?.Title;
+        public static string? Copyright => assembly?.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
+        public static string? Description => assembly?.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
+        public static string? Company => assembly?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company;
 
         public void Navigate(object sender, RequestNavigateEventArgs e)
         {

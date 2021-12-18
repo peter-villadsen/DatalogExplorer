@@ -1,4 +1,5 @@
 ﻿<Window x:Class="DatalogExplorer.MainWindow"
+        x:Name="Main"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,9 +12,9 @@
         Title="Datalog Explorer" Height="450" Width="800">
 
     <Window.InputBindings>
-        <KeyBinding Command="{Binding SaveFileCommand}" Gesture="CTRL+S"/>
-        <KeyBinding Command="{Binding OpenFileCommand}" Gesture="CTRL+O"/>
-        <KeyBinding Command="{Binding ExecuteCommand}" Gesture="F5"/>
+        <KeyBinding Command="{Binding SaveFileCommand}" CommandParameter="{Binding ElementName=Main}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding OpenFileCommand}" CommandParameter="{Binding ElementName=Main}" Gesture="CTRL+O"/>
+        <KeyBinding Command="{Binding ExecuteCommand}" CommandParameter="{Binding ElementName=Main}" Gesture="F5"/>
     </Window.InputBindings>
 
     <Window.Resources>
@@ -22,10 +23,10 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="Save" Command="{Binding SaveFileCommand}" InputGestureText="Ctrl+S" />
-                <MenuItem Header="Open" Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O"  />
+                <MenuItem Header="Save" Command="{Binding SaveFileCommand}" CommandParameter="{Binding ElementName=Main}" InputGestureText="Ctrl+S" />
+                <MenuItem Header="Open" Command="{Binding OpenFileCommand}" CommandParameter="{Binding ElementName=Main}" InputGestureText="Ctrl+O"  />
                 <Separator/>
-                <MenuItem Header="_Exit" Command="{Binding ApplicationExitCommand}"/>
+                <MenuItem Header="_Exit" Command="{Binding ApplicationExitCommand}" InputGestureText="Alt+F4"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Command="Cut" >
@@ -71,7 +72,7 @@
                 <ItemsPanelTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="140"/>
                         </Grid.ColumnDefinitions>
                     </Grid>
