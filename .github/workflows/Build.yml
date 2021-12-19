@@ -36,5 +36,5 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: DatalogExplorer.netcore
-        path: "PrologNetExplorer\\bin\\Release\\net5.0-windows\\win-x64\\publish"    
+        path: "PrologNetExplorer\\bin\\Debug\\net5.0-windows\\win-x64\\publish"    
         uses: actions/upload-artifact@v2
