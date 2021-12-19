@@ -16,7 +16,6 @@ namespace DatalogExplorer.ViewModels
     internal class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        //private readonly MainWindow view;
 
         private void OnPropertyChanged(string propertyName)
         {
