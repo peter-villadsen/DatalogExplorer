@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleApp1\Sharplog.csproj" />
     <ProjectReference Include="..\SharpLog\Sharplog.csproj" />
   </ItemGroup>
 
